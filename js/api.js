@@ -1,5 +1,5 @@
 const API_BASE = 'http://exam-api-courses.std-900.ist.mospolytech.ru';
-const API_KEY  = 'YOUR_API_KEY_HERE'; 
+const API_KEY  = '514731c2-0c47-4f6b-84a3-3cf6374c3755'; 
 
 function withKey(url) {
   const sep = url.includes('?') ? '&' : '?';
