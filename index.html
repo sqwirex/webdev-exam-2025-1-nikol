@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ru" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn Language — Языковая школа</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="./styles.css" rel="stylesheet" />
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f1f7-1f1fa.png" width="24" height="24" alt="" />
+        <span>Learn Language</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="mainNav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Курсы</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">О нас</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Контакты</a></li>
+          <li class="nav-item"><a class="nav-link" href="account.html">Личный кабинет</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-3" id="alertArea"></div>
+
+  <header class="bg-body-tertiary border-bottom">
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <h1 class="display-5 fw-bold">Изучай иностранные языки легко</h1>
+          <p class="lead">Курсы для начинающих и продвинутых, групповые и индивидуальные занятия.
+            Оформляй заявку онлайн и управляй ими в личном кабинете.</p>
+          <a href="#courses" class="btn btn-primary btn-lg">Посмотреть курсы</a>
+        </div>
+        <div class="col-lg-5">
+          <img class="img-fluid rounded-3 shadow-sm" src="https://images.unsplash.com/photo-1529078155058-5d716f45d604?q=80&w=1280&auto=format&fit=crop" alt="Students" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about" class="py-4">
+    <div class="container">
+      <h2 class="h3 mb-3">О нашей школе</h2>
+      <p class="mb-0">
+        Наша миссия — дать качественное языковое образование всем желающим. Мы используем современные методики,
+        интерактивные материалы и дружелюбных преподавателей-практиков.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-4 bg-body-tertiary border-top border-bottom">
+    <div class="container">
+      <h2 class="h3 mb-4">Преимущества изучения языка</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h3 class="h5">Глобальные возможности</h3>
+              <p class="mb-0">Работа, учеба и путешествия по всему миру становятся проще.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h3 class="h5">Культурный доступ</h3>
+              <p class="mb-0">Литература, кино и общение — без языкового барьера.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h3 class="h5">Карьерный рост</h3>
+              <p class="mb-0">Иностранный язык — весомое преимущество в резюме.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="courses" class="py-5">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
+        <h2 class="h3 mb-0">Предлагаемые курсы</h2>
+        <div class="d-flex gap-2">
+          <div class="input-group">
+            <span class="input-group-text">Название</span>
+            <input id="courseSearch" type="search" class="form-control" placeholder="Поиск по названию...">
+          </div>
+          <select id="courseLevel" class="form-select" style="max-width:220px">
+            <option value="">Все уровни</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="coursesList" class="list-group mb-3"></div>
+      <nav aria-label="Пагинация курсов">
+        <ul id="coursesPagination" class="pagination"></ul>
+      </nav>
+
+      <div class="text-end">
+        <button id="openOrderModalFromCourses" class="btn btn-success" disabled>Подать заявку</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="tutors" class="py-5 bg-body-tertiary border-top">
+    <div class="container">
+      <h2 class="h3">Доступные репетиторы</h2>
+
+      <div class="row g-2 mb-3">
+        <div class="col-md-4">
+          <label class="form-label">Уровень языка</label>
+          <select id="tutorLevel" class="form-select">
+            <option value="">Все</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Язык преподавания</label>
+          <input id="tutorLang" type="text" class="form-control" placeholder="Напр.: Russian, English">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Опыт (мин. лет)</label>
+          <input id="tutorExp" type="number" min="0" class="form-control" placeholder="0">
+        </div>
+      </div>
+
+      <div id="tutorsList" class="list-group mb-3"></div>
+
+      <div class="text-end">
+        <button id="openOrderModalFromTutors" class="btn btn-outline-success" disabled>Запросить занятие</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <h2 class="h4 mb-3">Интерактивные учебные ресурсы рядом</h2>
+      <div id="resourcesMap" class="rounded-3 shadow-sm" style="height: 320px;"></div>
+    </div>
+  </section>
+
+  <footer id="contact" class="py-4 bg-dark text-light mt-5">
+    <div class="container small">
+      <div class="row gy-3">
+        <div class="col-md">
+          <div class="fw-semibold">Контакты</div>
+          <div>Email: <a class="link-light" href="mailto:info@learnlanguage.com">info@learnlanguage.com</a></div>
+          <div>Тел: +7 (000) 000-00-00</div>
+        </div>
+        <div class="col-md">
+          <div class="fw-semibold">Полезные ссылки</div>
+          <ul class="list-unstyled mb-0">
+            <li><a class="link-light" href="#">FAQ</a></li>
+            <li><a class="link-light" href="#">Блог</a></li>
+            <li><a class="link-light" href="#">Ресурсы</a></li>
+            <li><a class="link-light" href="#">Обратная связь</a></li>
+          </ul>
+        </div>
+        <div class="col-md">
+          <div class="fw-semibold">Мы в соцсетях</div>
+          <a class="link-light me-2" href="#">VK</a>
+          <a class="link-light me-2" href="#">Telegram</a>
+          <a class="link-light" href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="orderModalTitle">Оформление заявки</h5>
+          <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+
+          <!-- Системная секция (не редактируется пользователем) -->
+          <input type="hidden" id="orderFor" value=""> <!-- course|tutor -->
+          <input type="hidden" id="orderCourseId">
+          <input type="hidden" id="orderTutorId">
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Название курса / Репетитор</label>
+              <input type="text" class="form-control" id="orderTitle" readonly>
+            </div>
+            <div class="col-12" id="orderTeacherWrap">
+              <label class="form-label">Преподаватель</label>
+              <input type="text" class="form-control" id="orderTeacher" readonly>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Дата начала</label>
+              <select id="orderDate" class="form-select"></select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Время занятия</label>
+              <select id="orderTime" class="form-select" disabled></select>
+              <div class="form-text">Время окончания вычисляется автоматически.</div>
+            </div>
+
+            <div class="col-md-6 d-none" id="durationWrap">
+              <label class="form-label">Длительность (часы, 1–40)</label>
+              <input id="orderDuration" type="number" min="1" max="40" class="form-control" value="1">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Количество студентов (1–20)</label>
+              <input id="orderPersons" type="number" min="1" max="20" class="form-control" value="1">
+            </div>
+
+            <div class="col-12" id="courseLenInfo" hidden>
+              <div class="small text-body-secondary">
+                Продолжительность курса: <span id="courseWeeks">-</span> недель
+                (по <span id="courseHoursWeek">-</span> ч/нед). Последнее занятие: <span id="courseEndDate">—</span>.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optEarly" disabled>
+                <label class="form-check-label" for="optEarly">Скидка за раннюю регистрацию (−10%)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optGroup" disabled>
+                <label class="form-check-label" for="optGroup">Скидка при групповой записи (−15%, от 5 человек)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optIntensive" disabled>
+                <label class="form-check-label" for="optIntensive">Интенсивный курс (+20%, &gt;20 ч/нед)</label>
+              </div>
+              <hr class="my-2">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optSupp">
+                <label class="form-check-label" for="optSupp">Дополнительные материалы (+2000 ₽ на студента)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optPers">
+                <label class="form-check-label" for="optPers">Индивидуальные занятия (+1500 ₽ за неделю курса)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optExcur">
+                <label class="form-check-label" for="optExcur">Культурные экскурсии (+25%)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optAssess">
+                <label class="form-check-label" for="optAssess">Оценка уровня (+300 ₽)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optInteractive">
+                <label class="form-check-label" for="optInteractive">Интерактивная платформа (×1.5)</label>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <div class="p-3 bg-body-tertiary rounded-3 border d-flex justify-content-between align-items-center">
+            <div>
+              <div class="fw-semibold">Итоговая стоимость: <span id="totalPrice">0</span> ₽</div>
+              <div class="small text-body-secondary" id="priceHints"></div>
+            </div>
+            <button class="btn btn-outline-secondary btn-sm" id="recalcBtn" type="button">Пересчитать</button>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button id="submitOrderBtn" class="btn btn-primary">Отправить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
